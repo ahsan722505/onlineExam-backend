@@ -18,7 +18,11 @@ const studentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref : "Admin",
         required : true
-    }
+    },
+    role: {
+        type: String,
+        required: true
+      }
   
 });
 

@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const examSchema = new Schema({
+    examName : String,
+    subjectName : String,
     questions : [
         {
-            statement:{
+            questionStatement:{
                 type : "String",
                 required : true,
             },

@@ -2,9 +2,11 @@ require("dotenv").config();
 const Teacher=require("../models/Teacher");
 const Student=require("../models/Student");
 const Class=require("../models/Class");
+const Exam=require("../models/Exam");
 const jwt=require("jsonwebtoken");
 module.exports={
     initialRequest : async function(args,req){
+      console.log("initial");
         if(!req.isAuth){
             const error = new Error('Not authenticated!');
             error.code = 401;
@@ -44,9 +46,12 @@ module.exports={
         return { token: token, userId: user._id.toString(),role : user.role,username : user.username };
       },
       getClasses : async function(args,req){
-          console.log(req.adminId);
             const classes=await Class.find({adminId : req.adminId});
-            console.log(classes);
             return classes
+      },
+      createExam : async function({examInputData},req){
+          const exam=new Exam({...examInputData,teacherId : req.userId, adminId : req.adminId});
+          await exam.save();
+          return {success : true}
       }
 }

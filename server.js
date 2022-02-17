@@ -9,6 +9,10 @@ const app=express();
 require("dotenv").config();
 app.use(cors());
 app.use(express.json());
+app.use((req,res,next)=>{
+  console.log("request here");
+  next()
+})
 app.use(auth);
 app.use(
     '/graphql',
@@ -17,6 +21,8 @@ app.use(
       rootValue: graphqlResolver,
       graphiql: true,
       customFormatErrorFn(err) {
+        console.log("err here");
+        console.log(err);
         if (!err.originalError) {
           return err;
         }

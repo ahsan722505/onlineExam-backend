@@ -32,10 +32,31 @@ module.exports=buildSchema(`
         questions : [Question]
         classId : ID
     }
+    type OutOption {
+        statement : String
+    }
+    type OutQuestion {
+        questionStatement : String
+        options : [OutOption]
+    }
+    type Teacher {
+        username : String
+
+    }
+    type Exam {
+        _id : ID
+        examName : String
+        subjectName : String
+        questions : [OutQuestion]
+        teacherId : Teacher
+        adminId : ID
+        classId : ID
+    }
     type RootQuery {
         initialRequest: initialResponse
         login(username: String, password: String): AuthData
         getClasses : [Class]
+        getExams : [Exam]
     }
     type RootMutation {
         createExam(examInputData : ExamInput) : Result

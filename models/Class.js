@@ -5,7 +5,7 @@ const classSchema = new Schema({
       type: String,
       required: true
     },
-    adminId : {
+    admin : {
         type: Schema.Types.ObjectId,
         ref : "Admin",
         required : true

@@ -9,12 +9,12 @@ const studentSchema = new Schema({
         type: String,
         required: true
     },
-    classId : {
+    class : {
         type: Schema.Types.ObjectId,
         ref : "Class",
         required : true
     },
-    adminId : {
+    admin : {
         type: Schema.Types.ObjectId,
         ref : "Admin",
         required : true

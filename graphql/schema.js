@@ -16,7 +16,7 @@ module.exports=buildSchema(`
     }
     type Class {
         name : String
-        adminId : ID
+        admin : ID
         _id : ID
     }
     input Option {
@@ -30,7 +30,7 @@ module.exports=buildSchema(`
         examName : String
         subjectName : String
         questions : [Question]
-        classId : ID
+        class : ID
     }
     type OutOption {
         statement : String
@@ -48,9 +48,9 @@ module.exports=buildSchema(`
         examName : String
         subjectName : String
         questions : [OutQuestion]
-        teacherId : Teacher
-        adminId : ID
-        classId : ID
+        teacher : Teacher
+        admin : ID
+        class : ID
     }
     type RootQuery {
         initialRequest: initialResponse

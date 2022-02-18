@@ -39,7 +39,7 @@ module.exports={
             userId: user._id.toString(),
             username: user.username,
             role : user.role,
-            adminId : user.adminId
+            adminId : user.admin
           },
           process.env.secret,
         );
@@ -50,13 +50,13 @@ module.exports={
             return classes
       },
       createExam : async function({examInputData},req){
-          const exam=new Exam({...examInputData,teacherId : req.userId, adminId : req.adminId});
+          const exam=new Exam({...examInputData,teacher : req.userId, admin : req.adminId});
           await exam.save();
           return {success : true}
       },
       getExams : async function (args,req){
         const student=await Student.findById(req.userId);
-        const exams= await Exam.find({classId : student.classId}).populate("teacherId").exec();
+        const exams= await Exam.find({class : student.class}).populate("teacher").exec();
         console.log(exams);
         return exams;
       }

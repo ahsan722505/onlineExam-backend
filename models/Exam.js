@@ -19,17 +19,17 @@ const examSchema = new Schema({
             ]
         }
     ],
-    classId : {
+    class : {
         type: Schema.Types.ObjectId,
         ref : "Class",
         required : true
     },
-    teacherId : {
+    teacher : {
         type: Schema.Types.ObjectId,
         ref : "Teacher",
         required : true
     },
-    adminId : {
+    admin : {
         type: Schema.Types.ObjectId,
         ref : "Admin",
         required : true

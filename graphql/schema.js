@@ -57,6 +57,7 @@ module.exports=buildSchema(`
         login(username: String, password: String): AuthData
         getClasses : [Class]
         getExams : [Exam]
+        getQuestions(examId : ID) : Exam
     }
     type RootMutation {
         createExam(examInputData : ExamInput) : Result

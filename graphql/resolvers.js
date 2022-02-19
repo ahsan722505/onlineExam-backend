@@ -59,5 +59,9 @@ module.exports={
         const exams= await Exam.find({class : student.class}).populate("teacher").exec();
         console.log(exams);
         return exams;
+      },
+      getQuestions : async function({examId},req){
+        const exam= await Exam.findById(examId);
+        return exam;
       }
 }

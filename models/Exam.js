@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 const examSchema = new Schema({
     examName : String,
     subjectName : String,
+    duration : String,
+    dateAndTime : String,
+    instructions : [{instruction : ""}],
     questions : [
         {
             questionStatement:{
@@ -19,6 +22,9 @@ const examSchema = new Schema({
             ]
         }
     ],
+    correctOptions : [{
+        type : Number
+    }],
     class : {
         type: Schema.Types.ObjectId,
         ref : "Class",
@@ -33,7 +39,13 @@ const examSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref : "Admin",
         required : true
-    }
+    },
+    attempts : [
+        {
+            type: Schema.Types.ObjectId,
+            ref : "Student",
+        }
+    ]
   
 });
 

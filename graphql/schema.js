@@ -26,9 +26,19 @@ module.exports=buildSchema(`
         questionStatement : String
         options : [Option]
     }
+    input Instruction {
+        instruction : String
+    }
+    type OutInstruction {
+        instruction : String
+    }
     input ExamInput {
         examName : String
+        correctOptions : [Int]
         subjectName : String
+        dateAndTime : String
+        instructions : [Instruction]
+        duration : String
         questions : [Question]
         class : ID
     }
@@ -47,6 +57,9 @@ module.exports=buildSchema(`
         _id : ID
         examName : String
         subjectName : String
+        duration : String
+        dateAndTime : String
+        instructions : [OutInstruction]
         questions : [OutQuestion]
         teacher : Teacher
         admin : ID
@@ -57,10 +70,11 @@ module.exports=buildSchema(`
         login(username: String, password: String): AuthData
         getClasses : [Class]
         getExams : [Exam]
-        getQuestions(examId : ID) : Exam
+        getExamContents(examId : ID,start : Boolean) : Exam
     }
     type RootMutation {
         createExam(examInputData : ExamInput) : Result
+        calculateMarks(answers : [Int] , examId : ID) : Result
     }
     schema {
         query : RootQuery

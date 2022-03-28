@@ -50,18 +50,35 @@ module.exports={
             return classes
       },
       createExam : async function({examInputData},req){
-          const exam=new Exam({...examInputData,teacher : req.userId, admin : req.adminId});
+          const exam=new Exam({...examInputData,teacher : req.userId, admin : req.adminId ,attempts : []});
           await exam.save();
           return {success : true}
       },
       getExams : async function (args,req){
         const student=await Student.findById(req.userId);
         const exams= await Exam.find({class : student.class}).populate("teacher").exec();
-        console.log(exams);
-        return exams;
+        return exams.filter(eachExam=>{
+          return eachExam.attempts.every(eachAttempt=> eachAttempt != req.userId)
+        })
+        
       },
-      getQuestions : async function({examId},req){
-        const exam= await Exam.findById(examId);
+      getExamContents : async function({examId,start},req){
+        let exam;
+        if(start){
+          exam=await Exam.findByIdAndUpdate(examId,{ "$push": { "attempts": req.userId } },{new : true});
+        }else{
+          exam=await Exam.findById(examId);
+        }
         return exam;
+      },
+      calculateMarks : async function({answers,examId},req){
+        const {correctOptions}=await Exam.findById(examId);
+        let marks=0;
+        correctOptions.forEach((eachOption,i)=>{
+          if(eachOption === answers[i]) marks++;
+        })
+        await Student.findByIdAndUpdate(req.userId,{ "$push": { "results": {exam : examId,marks} } });
+        return {success : true}
       }
+    
 }

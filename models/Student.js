@@ -22,7 +22,20 @@ const studentSchema = new Schema({
     role: {
         type: String,
         required: true
-      }
+      },
+      results : [
+          {
+              exam : {
+                type: Schema.Types.ObjectId,
+                ref : "Exam",
+                required : true
+              },
+              marks : {
+                type : Number,
+                required : true
+              }
+          }
+      ],
   
 });
 

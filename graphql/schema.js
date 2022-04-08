@@ -51,7 +51,6 @@ module.exports=buildSchema(`
     }
     type Teacher {
         username : String
-
     }
     type Exam {
         _id : ID
@@ -63,17 +62,19 @@ module.exports=buildSchema(`
         questions : [OutQuestion]
         teacher : Teacher
         admin : ID
-        class : ID
+        class : Class
+        correctOptions : [Int]
     }
     type RootQuery {
         initialRequest: initialResponse
         login(username: String, password: String): AuthData
         getClasses : [Class]
         getExams : [Exam]
+        getTeacherExams : [Exam]
         getExamContents(examId : ID,start : Boolean) : Exam
     }
     type RootMutation {
-        createExam(examInputData : ExamInput) : Result
+        createExam(examInputData : ExamInput , examId : ID) : Result
         calculateMarks(answers : [Int] , examId : ID) : Result
     }
     schema {

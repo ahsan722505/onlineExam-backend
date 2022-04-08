@@ -49,9 +49,14 @@ module.exports={
             const classes=await Class.find({adminId : req.adminId});
             return classes
       },
-      createExam : async function({examInputData},req){
+      createExam : async function({examInputData,examId},req){
+        if(examId){
+          await Exam.findByIdAndUpdate(examId,examInputData)
+        }
+        else{
           const exam=new Exam({...examInputData,teacher : req.userId, admin : req.adminId ,attempts : []});
           await exam.save();
+        }
           return {success : true}
       },
       getExams : async function (args,req){
@@ -62,12 +67,16 @@ module.exports={
         })
         
       },
+      getTeacherExams : async function (args,req){
+        const exams= await Exam.find({teacher : req.userId})
+        return exams;
+      },
       getExamContents : async function({examId,start},req){
         let exam;
         if(start){
           exam=await Exam.findByIdAndUpdate(examId,{ "$push": { "attempts": req.userId } },{new : true});
         }else{
-          exam=await Exam.findById(examId);
+          exam=await Exam.findById(examId).populate("class").exec();
         }
         return exam;
       },

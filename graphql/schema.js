@@ -76,6 +76,7 @@ module.exports=buildSchema(`
     type RootMutation {
         createExam(examInputData : ExamInput , examId : ID) : Result
         calculateMarks(answers : [Int] , examId : ID) : Result
+        deleteExam(examId : ID) : Result
     }
     schema {
         query : RootQuery

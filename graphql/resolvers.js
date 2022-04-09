@@ -88,6 +88,11 @@ module.exports={
         })
         await Student.findByIdAndUpdate(req.userId,{ "$push": { "results": {exam : examId,marks} } });
         return {success : true}
+      },
+      deleteExam : async function({examId},req){
+        await Exam.findByIdAndDelete(examId);
+        return {success : true}
       }
+      
     
 }
